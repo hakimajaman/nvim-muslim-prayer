@@ -56,7 +56,7 @@ local function sort_prayers_by_time(prayer_table)
 end
 
 function M.openSchedule()
-  local schedules = require("hakimajaman.muslim_prayer.utils.schedules")
+  local schedules = require("muslim-prayer.utils.schedules")
 
 
   schedules(function(data)
@@ -85,7 +85,7 @@ function M.openSchedule()
     --table.insert(lines, "Tips:")
     --table.insert(lines, '"C" to change the day')
 
-    local box = require("hakimajaman.muslim_prayer.views.comp.box")
+    local box = require("muslim-prayer.views.comp.box")
     local win, buf = box(lines)
 
     --highlight_column(buf, 2, #lines - 1, 4, column_width)
