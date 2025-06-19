@@ -1,0 +1,70 @@
+local M = {}
+local data = {}
+
+--local function fetch_location()
+--  local handle = io.popen('curl -s https://ipapi.co/json/')
+--
+--  if not handle then
+--    data.Location = nil
+--    return
+--  end
+--
+--  local result = handle:read("*a")
+--  handle:close()
+--
+--  local ok, res = pcall(vim.json.decode, result)
+--  if ok and res then
+--    print("🌍 You are in " .. res.city .. ", " .. res.region)
+--    print("🧭 Latitude: " .. res.latitude .. ", Longitude: " .. res.longitude)
+--    return res.latitude, res.longitude
+--  else
+--    print("❌ Failed to fetch location.")
+--  end
+--end
+--
+--local function fetch_praying_time()
+--  fetch_location()
+--end
+--
+--local function read_praying_time_file()
+--  fetch_praying_time()
+--  local dir = vim.fn.stdpath("data") .. "/muslim_prayer"
+--  local path = dir .. "/" .. "muslim_prayer_time.json"
+--  vim.notify("It's praying dzuhur time", vim.log.levels.INFO)
+--  print("oke")
+--
+--  -- ✅ Create directory if it doesn't exist
+--  if vim.fn.isdirectory(path) == 0 then
+--    vim.fn.mkdir(dir, "p")  -- "p" creates parent dirs as needed
+--  end
+--
+--  -- Check if file already exists
+--  local file = io.open(path, "r")
+--  if file then
+--    local content = file:read("*a")
+--    file:close()
+--    local readContent = vim.fn.json_decode(content)
+--    print("✅ File already exists: ")
+--    return
+--  end
+--
+--  file = io.open(path, "w")
+--  if not file then
+--    print("❌ Failed to create file: " .. path)
+--    return
+--  end
+--
+--  file:write(vim.fn.json_encode({
+--    name = "Hakim",
+--    createdAt = os.date()
+--  }))
+--  file:close()
+--  print("📝 File created: " .. path)
+--end
+--
+--function M.Notify()
+--  read_praying_time_file()
+--  --vim.notify("It's praying dzuhur time", vim.log.levels.INFO)
+--end
+
+return M
