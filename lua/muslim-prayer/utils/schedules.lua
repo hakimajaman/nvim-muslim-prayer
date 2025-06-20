@@ -114,30 +114,8 @@ local function schedules(callback)
       return
     end
 
-    -- Example to print today's prayer times
-    --print("Prayer Times for Batam on " .. today_key)
-    for prayer, time in pairs(today_schedule) do
-      --print(string.format("%s: %s", prayer, time))
-    end
-
-    -- You can also return static or dynamic tables as you want:
-    local title = { "Prayer Time in Batam" }
-    local days = { "", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" }
-    local prayers = {
-      { "Fajr" },
-      { "Dhuhr" },
-      { "Asr" },
-      { "Maghrib" },
-      { "Isha" },
-    }
-
     if callback then
-      callback({
-        title = title,
-        days = days,
-        prayers = prayers,
-        today_schedule = today_schedule,
-      })
+      callback(today_schedule)
     end
   end)
 end

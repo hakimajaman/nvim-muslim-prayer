@@ -58,47 +58,25 @@ end
 function M.openSchedule()
   local schedules = require("muslim-prayer.utils.schedules")
 
-
   schedules(function(data)
+    print('run schedules')
+
     if not data then
       print("Failed to get schedules")
       return
     end
 
-    -- Access your data here, for example:
-    local description = { "" }
     local lines = {}
-
-    local column_width = 12
-
-    local sorted_prayers = sort_prayers_by_time(data.today_schedule)
+    local sorted_prayers = sort_prayers_by_time(data)
     local rotated_prayers = rotate_to_fajr(sorted_prayers)
 
     for _, entry in ipairs(rotated_prayers) do
-      -- Format: left align prayer name (width 12), right align time (width 10)
       local line = string.format("%-12s %10s", entry.prayer, entry.time_str)
       table.insert(lines, line)
     end
 
-    ---- Add the description at the bottom
-    --table.insert(lines, "")
-    --table.insert(lines, "Tips:")
-    --table.insert(lines, '"C" to change the day')
-
     local box = require("muslim-prayer.views.comp.box")
     local win, buf = box(lines)
-
-    --highlight_column(buf, 2, #lines - 1, 4, column_width)
-
-    ---- Highlight "C" hotkey
-    --local desc_line = 3
-    --for i = 1, desc_line do
-    --  local hot_line = #lines - i
-    --  vim.api.nvim_buf_add_highlight(buf, -1, "MyHotkey", hot_line, 0, 3)
-    --end
-
-    --local date = require("hakimajaman.muslim_prayer.utils.change_date")
-    --date.change_date(buf)
   end)
 end
 
