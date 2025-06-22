@@ -55,12 +55,10 @@ local function sort_prayers_by_time(prayer_table)
   return arr
 end
 
-function M.openSchedule()
+function M.openSchedule(callback)
   local schedules = require("muslim-prayer.utils.schedules")
 
   schedules(function(data)
-    print('run schedules')
-
     if not data then
       print("Failed to get schedules")
       return
@@ -77,6 +75,10 @@ function M.openSchedule()
 
     local box = require("muslim-prayer.views.comp.box")
     local win, buf = box(lines)
+
+    if callback then
+      callback(win)
+    end
   end)
 end
 
