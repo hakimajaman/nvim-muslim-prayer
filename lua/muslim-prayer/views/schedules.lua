@@ -1,8 +1,6 @@
 local M = {}
-
 vim.cmd([[
-  highlight MyTuesdayHighlight guibg=LightSkyBlue guifg=Red
-  highlight MyHotkey guibg=#fdfdfd guifg=black
+  highlight MuslimPrayerHighlightNextPrayer guibg=#FDFDFD guifg=black
 ]])
 
 local function highlight_column(buf, start_line, end_line, column_index, column_width)
@@ -58,7 +56,7 @@ end
 function M.openSchedule(callback)
   local schedules = require("muslim-prayer.utils.schedules")
 
-  schedules(function(data)
+  schedules(function(data, date)
     if not data then
       print("Failed to get schedules")
       return
@@ -67,6 +65,9 @@ function M.openSchedule(callback)
     local lines = {}
     local sorted_prayers = sort_prayers_by_time(data)
     local rotated_prayers = rotate_to_fajr(sorted_prayers)
+
+    table.insert(lines, string.format('Date: %s', date))
+    table.insert(lines, '')
 
     for _, entry in ipairs(rotated_prayers) do
       local line = string.format("%-12s %10s", entry.prayer, entry.time_str)

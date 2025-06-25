@@ -13,7 +13,6 @@ function M.change_date(buf, date)
     vim.ui.input({ prompt = "Enter Date: ", default = tostring(selectedDate) }, function(input)
       if input:match("^%d%d?/%d%d?/%d%d%d%d$") ~= nil then
         selectedDate = input
-        print(selectedDate)
       else
         print("False inputting date, it should dd/mm/yyyy")
       end

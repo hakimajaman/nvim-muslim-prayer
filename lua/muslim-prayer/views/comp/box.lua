@@ -96,7 +96,7 @@ local function box(lines)
   local next_line = get_next_prayer(lines)
   if next_line then
     -- highlight the entire line (0-based indexing internally)
-    vim.api.nvim_buf_add_highlight(buf, -1, "MyHotkey", next_line - 1, 0, -1)
+    vim.api.nvim_buf_add_highlight(buf, -1, "MuslimPrayerHighlightNextPrayer", next_line - 1, 0, -1)
   end
 
   vim.keymap.set("n", "q", function()

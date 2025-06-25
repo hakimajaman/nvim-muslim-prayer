@@ -1,14 +1,31 @@
 local Job = require("plenary.job")
 
 local function get_schedules(callback)
-  local month = os.date("*t").month
-  local base_url = string.format("https://api.aladhan.com/v1/calendar/2025/%d", month)
-  local latitude = "1.14937"
-  local longitude = "104.02491"
-  local method = "3"
-  local shafaq = "general"
-  local timezonestring = "Asia/Jakarta"
-  local calendarMethod = "UAQ"
+  local config = require('muslim-prayer.setup').config
+
+  local date = os.date("*t")
+  local day = date.day
+  local month = date.month
+  local year = date.year
+  local base_url = ''
+
+  if config.autoLocation == true then
+  end
+
+  if config.getScheduleBy == 'day' or config.alwaysResync == true then
+    base_url = string.format("https://api.aladhan.com/v1/timings/%d-%d-%d", day, month, year)
+  elseif config.getScheduleBy == 'year' then
+    base_url = string.format("https://api.aladhan.com/v1/calendar/%d", year)
+  else
+    base_url = string.format("https://api.aladhan.com/v1/calendar/%d/%d", year, month)
+  end
+
+  local latitude = config.latitude
+  local longitude = config.longitude
+  local method = config.method
+  local shafaq = config.shafaq
+  local timezonestring = config.timezonestring
+  local calendarMethod = config.calendarMethod
 
   local query = string.format(
     "latitude=%s&longitude=%s&method=%s&shafaq=%s&timezonestring=%s&calendarMethod=%s",
@@ -19,7 +36,6 @@ local function get_schedules(callback)
 
   local json = {
     generatedAt = os.time(),
-    location = "Batam",
     data = {}
   }
 
@@ -31,8 +47,18 @@ local function get_schedules(callback)
 
       local ok, decoded = pcall(vim.json.decode, result)
       if ok and decoded and decoded.data then
-        for _, item in ipairs(decoded.data) do
-          table.insert(json.data, item)
+        if config.getScheduleBy == 'day' then
+          table.insert(json.data, decoded.data)
+        elseif config.getScheduleBy == 'year' then
+          for month_num, days in pairs(decoded.data) do
+            for _, item in ipairs(days) do
+              table.insert(json.data, item)
+            end
+          end
+        else
+          for _, item in ipairs(decoded.data) do
+            table.insert(json.data, item)
+          end
         end
 
         -- Save JSON file asynchronously
@@ -84,7 +110,11 @@ local function get_local_schedules(callback)
   end
 end
 
-local function schedules(callback)
+local function schedules(callback, reschedule)
+  if reschedule == true then
+    get_schedules()
+    return
+  end
   -- schedules now accepts a callback to provide data asynchronously
   get_local_schedules(function(local_schedules)
     if not local_schedules or not local_schedules.data then
@@ -115,7 +145,7 @@ local function schedules(callback)
     end
 
     if callback then
-      callback(today_schedule)
+      callback(today_schedule, today_key)
     end
   end)
 end
