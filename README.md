@@ -82,6 +82,7 @@ The plugin supports the following default config (overridable via .setup({})):
 
   -- Language
   lang = "id", -- "id" for Bahasa Indonesia or "en" for English
+  notify_before = 30 -- in mins // by default it's 30 mins
 }
 ```
 

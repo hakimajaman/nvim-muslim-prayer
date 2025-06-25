@@ -66,12 +66,13 @@ function M.check_and_show_alarm(next)
         end
       end
     else
+      local notify_before = require("muslim-prayer.setup").config.notify_before or 30
       for prayer, time_str in pairs(today_schedule) do
         local time_only = time_str:match("^(%d+:%d+)")
         local prayer_minutes = to_minutes(time_only)
 
         local diff = prayer_minutes - now_minutes
-        if diff <= 30 and diff >= 0 then
+        if diff <= notify_before and diff >= 0 then
           if last_alarm_prayer ~= prayer then
             last_alarm_prayer = prayer
             on_notify(prayer, time_only)

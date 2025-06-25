@@ -19,7 +19,8 @@ M.defaultConfig = {
   alwaysResync = false, -- false or true
 
   -- language
-  lang = 'id'
+  lang = 'id',
+  notify_before = 30 -- in mins
 }
 
 M.config = {}
