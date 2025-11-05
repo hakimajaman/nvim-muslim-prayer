@@ -18,8 +18,9 @@ Built with 💖 for productivity-focused developers who don't want to miss their
 
 ## 📦 Installation
 
-Using [lazy.nvim](https://github.com/folke/lazy.nvim);
-If you want to check your latitude and longitude, you can find it in [ip-api](http://ip-api.com/json/);
+Using [lazy.nvim](https://github.com/folke/lazy.nvim):
+
+If you want to check your latitude and longitude, you can find it at [ip-api](http://ip-api.com/json/).
 
 ```lua
 {
@@ -38,7 +39,6 @@ If you want to check your latitude and longitude, you can find it in [ip-api](ht
       shafaq = "general",
       timezonestring = "Asia/Jakarta",
       calendarMethod = "UAQ",
-      location = "Default City",
       lang = "id", -- or "en"
 
       notification_style = "box", -- "box" or "notify"
@@ -71,14 +71,15 @@ The plugin supports the following default config (overridable via .setup({})):
   shafaq = "general",
   timezonestring = "Asia/Jakarta",
   calendarMethod = "UAQ",
-  location = "Default City",
 
   -- UI
   notification_style = "box", -- "box" or "notify"
+  highlight_color = "LightBlue",
 
   -- Fetch behavior
   getScheduleBy = "month", -- "day", "month", or "year"
   alwaysResync = false,
+  autoLocation = false, -- Auto-detect location (future feature)
 
   -- Language
   lang = "id", -- "id" for Bahasa Indonesia or "en" for English
@@ -96,4 +97,5 @@ Hadiths are shown in the selected language (lang = "id" or "en").
 
 ## 🤝 Contribution
 Have ideas or suggestions? Feel free to fork, improve, and submit PRs.
-Let’s help more developers remember their prayers
+Let’s help more developers remember their prayers!
+
